@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from __future__ import with_statement
+
 
 import os
 import socket
-import urllib, urllib2, urlparse
+import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse, urllib.parse
 
 try:
     from lxml import etree
@@ -21,14 +21,14 @@ from mollie.ideal.settings import MOLLIE_API_URL, MOLLIE_BANKLIST_DIR, MOLLIE_TE
 socket.setdefaulttimeout(MOLLIE_TIMEOUT)
 
 def _get_mollie_xml(request_dict, base_url=MOLLIE_API_URL, testmode=MOLLIE_TEST):
-    scheme, netloc, path, query, fragment = urlparse.urlsplit(base_url)
+    scheme, netloc, path, query, fragment = urllib.parse.urlsplit(base_url)
     if testmode:
         request_dict['testmode'] = 'true'
-    query = urllib.urlencode(request_dict)
-    url = urlparse.urlunsplit((scheme, netloc, path, query, fragment))
+    query = urllib.parse.urlencode(request_dict)
+    url = urllib.parse.urlunsplit((scheme, netloc, path, query, fragment))
     try:
-        xml = urllib2.urlopen(url)
-    except (urllib2.HTTPError, urllib2.URLError), error:
+        xml = urllib.request.urlopen(url)
+    except (urllib.error.HTTPError, urllib.error.URLError) as error:
         raise error
     parsed_xml = etree.parse(xml)
     return parsed_xml
@@ -49,5 +49,5 @@ def get_mollie_bank_choices(testmode=MOLLIE_TEST, show_all_banks=False):
                 choices.append(test_bank)
             choices.insert(0, empty_choice)
             return tuple(choices)
-        except etree.XMLSyntaxError, error:
+        except etree.XMLSyntaxError as error:
             raise error

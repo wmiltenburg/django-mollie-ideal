@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import os, urllib
+import os, urllib.request, urllib.parse, urllib.error
 
 from django.core.management.base import NoArgsCommand, CommandError
 
@@ -15,7 +15,7 @@ class Command(NoArgsCommand):
         url = '%s?a=banklist' % MOLLIE_API_URL
         file = os.path.join(here, 'mollie_banklist.xml')
         try:
-            urllib.urlretrieve(url, file)
-            print 'File %s saved to %s.' % (os.path.basename(file), here)
+            urllib.request.urlretrieve(url, file)
+            print('File %s saved to %s.' % (os.path.basename(file), here))
         except:
             raise CommandError('Something went wrong!')

@@ -79,4 +79,4 @@ class MollieIdealPayment(models.Model):
         return self.get_bank_id_display()
 
     def __unicode__(self):
-        return u'Mollie/iDEAL Payment ID: %d' % self.id
+        return 'Mollie/iDEAL Payment ID: %d' % self.id
